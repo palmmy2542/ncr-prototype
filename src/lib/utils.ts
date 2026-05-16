@@ -57,6 +57,6 @@ export function canUserAct(
   steps: { stepNumber: number; assignedUserId: string }[],
   userId: string
 ): boolean {
-  if (status === 'CLOSED') return false;
+  if (status === 'CLOSED' || status === 'DRAFT') return false;
   return getCurrentAssigneeId(status, createdBy, steps) === userId;
 }
