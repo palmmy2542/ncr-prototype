@@ -58,6 +58,13 @@ export function assertCanAct(ncr: NCR, actor: ActorInfo): void {
     throw new WorkflowError('This NCR is closed and cannot be modified.');
   }
 
+  if (ncr.status === 'DRAFT') {
+    if (ncr.createdBy !== actor.userId) {
+      throw new WorkflowError('Only the NCR creator can submit it.');
+    }
+    return;
+  }
+
   const stepMap: Partial<Record<NCRStatus, number>> = {
     PENDING_1: 1,
     PENDING_2: 2,
